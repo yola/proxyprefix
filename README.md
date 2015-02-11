@@ -3,8 +3,8 @@
 Let a reverse proxied app know what path it's proxied at. This will allow it
 to prefix URL paths accordingly.
 
-This is achieved using a WSGI middleware and passing an X-Forwarded-Prefix
-header.
+This is achieved using a WSGI middleware that prefixes `SCRIPT_NAME` with an
+`X-Forwarded-Prefix` header if present.
 
 ## Installation
 
