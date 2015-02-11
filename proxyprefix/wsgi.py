@@ -1,4 +1,6 @@
 class ReverseProxiedApp(object):
+    """WSGI middleware to prefix script name with X-Forwarded-Prefix header."""
+
     def __init__(self, app):
         self.app = app
 
