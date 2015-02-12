@@ -10,10 +10,10 @@ class TestReverseProxiedApp(TestCase):
         self.prefix_paths = self.prefix_paths_patcher.start()
         self.addCleanup(self.prefix_paths_patcher.stop)
 
-        self.environ = {'SCRIPT_NAME': '/script'}
+        self.environ = {}
         self.start_response = Mock()
-
         self.inner_app = Mock()
+
         self.proxied_app = ReverseProxiedApp(self.inner_app)
 
     def test_it_calls_the_wrapped_application(self):
