@@ -41,9 +41,10 @@ curl -H 'X-Forwarded-Host: client.com' http://service.com/posts
 }
 ```
 
-That URL will 404, since the posts live at `/service/posts` on the client. If
-`service.com` is running the proxyprefix middleware, you can fix this by
-making sure your proxy configuration passes a `X-Forwarded-Prefix` header.
+That URL will 404, since the posts live at `/service/posts` on the client.
+Assuming `service.com` honors `SCRIPT_NAME`/`SCRIPT_URL` when generating urls,
+you can fix this by adding the proxyprefix middleware to `service.com` and
+making sure `client.com` passes a `X-Forwarded-Prefix` header.
 For example:
 
 ```
