@@ -5,9 +5,13 @@ class ReverseProxiedApp(object):
         self.app = app
 
     def __call__(self, environ, start_response):
-        script = environ['SCRIPT_NAME']
         prefix = environ.get('HTTP_X_FORWARDED_PREFIX')
         if prefix:
-            script = '/%s/%s' % (prefix.strip('/'), script.lstrip('/'))
-        environ['SCRIPT_NAME'] = script
+            prefix_paths(environ, prefix)
         return self.app(environ, start_response)
+
+
+def prefix_paths(environ, prefix):
+    script = environ['SCRIPT_NAME']
+    script = '/%s/%s' % (prefix.strip('/'), script.lstrip('/'))
+    environ['SCRIPT_NAME'] = script
