@@ -12,6 +12,6 @@ class ReverseProxiedApp(object):
 
 
 def prefix_paths(environ, prefix):
-    script = environ['SCRIPT_NAME']
-    script = '/%s/%s' % (prefix.strip('/'), script.lstrip('/'))
-    environ['SCRIPT_NAME'] = script
+    for key in ['SCRIPT_NAME', 'SCRIPT_URL']:
+        value = environ.get(key, '')
+        environ[key] = '/%s/%s' % (prefix.strip('/'), value.lstrip('/'))

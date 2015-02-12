@@ -35,8 +35,11 @@ class TestPrefixPaths(TestCase):
     """prefix_paths(environ, prefix)"""
 
     def setUp(self):
-        self.environ = {'SCRIPT_NAME': '/script'}
+        self.environ = {'SCRIPT_NAME': '/script', 'SCRIPT_URL': '/scripturl'}
+        prefix_paths(self.environ, 'prefix')
 
     def test_it_prefixes_SCRIPT_NAME_with_prefix(self):
-        prefix_paths(self.environ, 'prefix')
         self.assertEqual(self.environ['SCRIPT_NAME'], '/prefix/script')
+
+    def test_it_prefix_SCRIPT_URL_with_prefix(self):
+        self.assertEqual(self.environ['SCRIPT_URL'], '/prefix/scripturl')
