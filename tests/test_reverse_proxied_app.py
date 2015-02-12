@@ -41,5 +41,5 @@ class TestPrefixPaths(TestCase):
     def test_it_prefixes_SCRIPT_NAME_with_prefix(self):
         self.assertEqual(self.environ['SCRIPT_NAME'], '/prefix/script')
 
-    def test_it_prefix_SCRIPT_URL_with_prefix(self):
+    def test_it_prefixes_SCRIPT_URL_with_prefix(self):
         self.assertEqual(self.environ['SCRIPT_URL'], '/prefix/scripturl')
