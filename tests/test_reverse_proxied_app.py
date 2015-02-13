@@ -43,3 +43,13 @@ class TestPrefixPaths(TestCase):
 
     def test_it_prefixes_SCRIPT_URL_with_prefix(self):
         self.assertEqual(self.environ['SCRIPT_URL'], '/prefix/scripturl')
+
+    def test_it_prefixes_empty_SCRIPT_NAME_with_prefix(self):
+        self.environ['SCRIPT_NAME'] = ''
+        prefix_paths(self.environ, 'prefix')
+        self.assertEqual(self.environ['SCRIPT_NAME'], '/prefix/')
+
+    def test_it_does_not_prefix_empty_SCRIPT_URL_with_prefix(self):
+        self.environ['SCRIPT_URL'] = ''
+        prefix_paths(self.environ, 'prefix')
+        self.assertEqual(self.environ['SCRIPT_URL'], '')

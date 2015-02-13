@@ -13,6 +13,8 @@ class ReverseProxiedApp(object):
 
 def prefix_paths(environ, prefix):
     """Add a prefix to the URL paths in the environment."""
+    environ['SCRIPT_NAME'] = environ.get('SCRIPT_NAME') or '/'
     for key in ['SCRIPT_NAME', 'SCRIPT_URL']:
-        value = environ.get(key, '')
-        environ[key] = '/%s/%s' % (prefix.strip('/'), value.lstrip('/'))
+        value = environ.get(key)
+        if value:
+            environ[key] = '/%s/%s' % (prefix.strip('/'), value.lstrip('/'))
