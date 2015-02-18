@@ -20,7 +20,7 @@ def prefix_paths(environ, prefix):
     # Django will try to extract the script name from it, instead of looking at
     # the SCRIPT_NAME env var. But the way Django does this is buggy: it
     # removes len(PATH_INFO) chars from the end of SCRIPT_URL, but PATH_INFO is
-    # not always a substring of SCRIPT_URL). Since we are forcing SCRIPT_NAME
+    # not always a substring of SCRIPT_URL. Since we are forcing SCRIPT_NAME
     # here anyway, we can remove SCRIPT_URL to simplify things and get around
     # this django quirk:
     if environ.get('SCRIPT_URL'):
