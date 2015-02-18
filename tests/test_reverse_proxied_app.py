@@ -41,15 +41,13 @@ class TestPrefixPaths(TestCase):
     def test_it_prefixes_SCRIPT_NAME_with_prefix(self):
         self.assertEqual(self.environ['SCRIPT_NAME'], '/prefix/script')
 
-    def test_it_prefixes_SCRIPT_URL_with_prefix(self):
-        self.assertEqual(self.environ['SCRIPT_URL'], '/prefix/scripturl')
-
     def test_it_prefixes_empty_SCRIPT_NAME_with_prefix(self):
         self.environ['SCRIPT_NAME'] = ''
         prefix_paths(self.environ, 'prefix')
         self.assertEqual(self.environ['SCRIPT_NAME'], '/prefix/')
 
-    def test_it_does_not_prefix_empty_SCRIPT_URL_with_prefix(self):
-        self.environ['SCRIPT_URL'] = ''
+    def test_it_removes_SCRIPT_URL_if_present(self):
+        # see proxyprefix.wsgi.prefix_paths for why we do this
+        self.environ['SCRIPT_URL'] = '/script/url'
         prefix_paths(self.environ, 'prefix')
-        self.assertEqual(self.environ['SCRIPT_URL'], '')
+        self.assertFalse(self.environ['SCRIPT_URL'])
