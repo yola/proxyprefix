@@ -10,4 +10,5 @@ setup(
     long_description=proxyprefix.__doc__,
     url='https://github.com/yola/proxyprefix',
     packages=['proxyprefix'],
+    test_suite='nose.collector',
 )
