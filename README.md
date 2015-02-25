@@ -56,6 +56,29 @@ http://service.com/posts
 }
 ```
 
+### Sending X-Forwarded-For header in local development:
+
+If you use [djproxy](https://github.com/thomasw/djproxy) to proxy services in
+local development, you can send the `X-Forwarded-Prefix` by using the
+`XForwardedPrefix` proxy middleware included in this package. For example:
+
+```python
+from djproxy.urls import generate_routes
+
+configuration = {
+    'service_name': {
+        'base_url': 'https://service.com/',
+        'prefix': '/service_prefix/',
+        'append_middlware': ['proxyprefx.contrib.djproxy.XForwardedPrefix']
+    }
+}
+
+urlpatterns += generate_routes(configuration)
+```
+
+This will tell djproxy to send `X-Forwarded-Prefix: /service_prefix/` in the
+request to service.com.
+
 ## Development
 
 Clone the project and install requirements:
