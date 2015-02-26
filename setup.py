@@ -14,4 +14,9 @@ setup(
     url='https://github.com/yola/proxyprefix',
     packages=['proxyprefix'],
     test_suite='nose.collector',
+    classifiers=[
+        'License :: OSI Approved :: MIT License',
+        'Programming Language :: Python :: 2',
+        'Topic :: Internet :: WWW/HTTP :: WSGI :: Middleware',
+    ],
 )
