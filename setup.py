@@ -19,4 +19,7 @@ setup(
         'Programming Language :: Python :: 2',
         'Topic :: Internet :: WWW/HTTP :: WSGI :: Middleware',
     ],
+    extras_require = {
+        'djproxy': ['djproxy>=2.0.0'],
+    },
 )
