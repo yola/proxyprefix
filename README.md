@@ -79,6 +79,8 @@ urlpatterns += generate_routes(configuration)
 This will tell djproxy to send `X-Forwarded-Prefix: /service_prefix/` in the
 request to service.com.
 
+**Middleware support was added in djproxy 2.0.0.**
+
 ## Development
 
 Clone the project and install requirements:
