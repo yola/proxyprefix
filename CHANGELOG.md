@@ -1,6 +1,6 @@
 ## 0.1.1
 
-* Add `contrib.djproxy.AddXForwardedPrefix` for sending X-Forwarded-Prefix
+* Add `contrib.djproxy.XForwardedPrefix` for sending X-Forwarded-Prefix
   header in local dev.
 
 ## 0.1.0
