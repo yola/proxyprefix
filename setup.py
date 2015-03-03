@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import find_packages, setup
 
 import proxyprefix
 
@@ -12,7 +12,7 @@ setup(
     author_email='engineers@yola.com',
     license='MIT (Expat)',
     url='https://github.com/yola/proxyprefix',
-    packages=['proxyprefix'],
+    packages=find_packages(exclude=['tests', 'tests.*']),
     test_suite='nose.collector',
     classifiers=[
         'License :: OSI Approved :: MIT License',
