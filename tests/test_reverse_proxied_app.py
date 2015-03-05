@@ -30,6 +30,15 @@ class TestReverseProxiedApp(TestCase):
         self.proxied_app(self.environ, self.start_response)
         self.prefix_paths.assert_called_with(self.environ, 'prefix')
 
+    def test_it_does_not_set_scheme_if_no_HTTP_X_FORWARDED_PROTO(self):
+        self.proxied_app(self.environ, self.start_response)
+        self.assertIsNone(self.environ.get('wsgi.url_scheme'))
+
+    def test_it_sets_scheme_to_HTTP_X_FORWARDED_PROTO(self):
+        self.environ['HTTP_X_FORWARDED_PROTO'] = 'http'
+        self.proxied_app(self.environ, self.start_response)
+        self.assertEqual(self.environ.get('wsgi.url_scheme'), 'http')
+
 
 class TestPrefixPaths(TestCase):
     """prefix_paths(environ, prefix)"""

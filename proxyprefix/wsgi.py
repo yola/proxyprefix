@@ -6,8 +6,14 @@ class ReverseProxiedApp(object):
 
     def __call__(self, environ, start_response):
         prefix = environ.get('HTTP_X_FORWARDED_PREFIX')
+        scheme = environ.get('HTTP_X_FORWARDED_PROTO')
+
         if prefix:
             prefix_paths(environ, prefix)
+
+        if scheme:
+            environ['wsgi.url_scheme'] = scheme
+
         return self.app(environ, start_response)
 
 
