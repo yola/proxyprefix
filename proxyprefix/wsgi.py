@@ -12,6 +12,7 @@ class ReverseProxiedApp(object):
             prefix_paths(environ, prefix)
 
         if scheme:
+            scheme = 'https' if scheme == 'https' else 'http'
             environ['wsgi.url_scheme'] = scheme
 
         return self.app(environ, start_response)
