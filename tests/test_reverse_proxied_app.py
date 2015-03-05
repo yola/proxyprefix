@@ -6,9 +6,9 @@ from proxyprefix.wsgi import prefix_paths, ReverseProxiedApp
 
 class TestReverseProxiedApp(TestCase):
     def setUp(self):
-        self.prefix_paths_patcher = patch('proxyprefix.wsgi.prefix_paths')
-        self.prefix_paths = self.prefix_paths_patcher.start()
-        self.addCleanup(self.prefix_paths_patcher.stop)
+        prefix_paths_patcher = patch('proxyprefix.wsgi.prefix_paths')
+        self.prefix_paths = prefix_paths_patcher.start()
+        self.addCleanup(prefix_paths_patcher.stop)
 
         self.environ = {}
         self.start_response = Mock()
