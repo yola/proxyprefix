@@ -6,8 +6,14 @@ class ReverseProxiedApp(object):
 
     def __call__(self, environ, start_response):
         prefix = environ.get('HTTP_X_FORWARDED_PREFIX')
+        scheme = environ.get('HTTP_X_FORWARDED_PROTO')
+
         if prefix:
             prefix_paths(environ, prefix)
+
+        if scheme:
+            set_scheme(environ, scheme)
+
         return self.app(environ, start_response)
 
 
@@ -25,3 +31,10 @@ def prefix_paths(environ, prefix):
     # this django quirk:
     if environ.get('SCRIPT_URL'):
         environ['SCRIPT_URL'] = ''
+
+
+def set_scheme(environ, scheme):
+    """Force environ to be http or https."""
+    scheme = 'https' if scheme == 'https' else 'http'
+    environ['wsgi.url_scheme'] = scheme
+    environ['HTTPS'] = 'on' if scheme == 'https' else 'off'
