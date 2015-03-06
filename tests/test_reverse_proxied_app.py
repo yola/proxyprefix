@@ -79,3 +79,11 @@ class TestSetScheme(TestCase):
     def test_sets_wsgi_url_scheme_to_http_if_scheme_is_not_https(self):
         set_scheme(self.environ, 'foo')
         self.assertEqual(self.environ['wsgi.url_scheme'], 'http')
+
+    def test_sets_HTTPS_to_on_if_scheme_is_https(self):
+        set_scheme(self.environ, 'https')
+        self.assertEqual(self.environ['HTTPS'], 'on')
+
+    def test_sets_HTTPS_to_off_if_scheme_is_not_https(self):
+        set_scheme(self.environ, 'foo')
+        self.assertEqual(self.environ['HTTPS'], 'off')

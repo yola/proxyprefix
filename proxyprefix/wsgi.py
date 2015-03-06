@@ -37,3 +37,4 @@ def set_scheme(environ, scheme):
     """Force environ to be http or https."""
     scheme = 'https' if scheme == 'https' else 'http'
     environ['wsgi.url_scheme'] = scheme
+    environ['HTTPS'] = 'on' if scheme == 'https' else 'off'
