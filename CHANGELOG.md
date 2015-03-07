@@ -1,3 +1,7 @@
+## 0.1.2
+
+* [Set scheme with `X-Forwarded-Proto` header.](https://github.com/yola/proxyprefix/pull/7)
+
 ## 0.1.1
 
 * Add `proxyprefix.contrib.djproxy.XForwardedPrefix` for sending
