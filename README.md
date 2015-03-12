@@ -1,4 +1,6 @@
 # proxyprefix
+[![Build Status](https://travis-ci.org/yola/proxyprefix.svg?branch=master)](https://travis-ci.org/yola/proxyprefix)
+[![PyPI version](https://badge.fury.io/py/proxyprefix.svg)](http://badge.fury.io/py/proxyprefix)
 
 Let a reverse proxied app know what path it's proxied at. This will allow it
 to prefix URL paths accordingly.
