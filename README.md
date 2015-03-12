@@ -1,6 +1,7 @@
 # proxyprefix
 [![Build Status](https://travis-ci.org/yola/proxyprefix.svg?branch=master)](https://travis-ci.org/yola/proxyprefix)
 [![PyPI version](https://badge.fury.io/py/proxyprefix.svg)](http://badge.fury.io/py/proxyprefix)
+[![Downloads](https://pypip.in/download/proxyprefix/badge.svg?style=flat)](https://pypi.python.org/pypi/proxyprefix/)
 [![Coverage Status](https://coveralls.io/repos/yola/proxyprefix/badge.png?branch=master)](https://coveralls.io/r/yola/proxyprefix?branch=master)
 
 Let a reverse proxied app know what path it's proxied at. This will allow it
