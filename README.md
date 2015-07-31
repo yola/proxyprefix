@@ -4,11 +4,57 @@
 [![Downloads](https://pypip.in/download/proxyprefix/badge.svg?style=flat)](https://pypi.python.org/pypi/proxyprefix/)
 [![Coverage Status](https://coveralls.io/repos/yola/proxyprefix/badge.svg?branch=master)](https://coveralls.io/r/yola/proxyprefix?branch=master)
 
-Let a reverse proxied app know what path it's proxied at. This will allow it
-to prefix URL paths accordingly.
+Let a proxied service know how it should construct URLs in the response.
 
 This is achieved using a WSGI middleware that prefixes `SCRIPT_NAME` with an
 `X-Forwarded-Prefix` header if present.
+
+It will also update the WSGI environ to set `wsgi.url_scheme` and `HTTPS`
+according to the `X-Forwarded-Proto` header if present.
+
+## Example
+
+Let's say:
+
+`curl https://service.com/posts/`
+
+responds with:
+
+```
+{
+    "posts": [...],
+    "next": "https://service.com/posts/?page=2"
+}
+```
+
+If we put `service` behind a proxy at `http://client.com/service/`, we want to
+make the following changes to that `next` URL:
+
+1. The host name should be `client.com` instead of `service.com`.
+2. The protocol should be `http` instead of `https`.
+3. The path should start with `/service/`.
+
+If you're using django, you can do all three by setting
+`settings.USE_X_FORWARDED_HOST` to `True`, installing the `proxyprefix` WSGI
+middleware, and making sure your proxy sends these headers with its request to
+`service`:
+
+```
+curl \
+  --header X-Forwarded-Host: client.com \
+  --header X-Forwarded-Proto: http \
+  --header X-Forwarded-Prefix: /service/ \
+  https://service.com/posts/
+```
+
+Which gives you a response with links to the proxy, not the service:
+
+```
+{
+    "posts": [...],
+    "next": "http://client.com/service/posts/?page=2"
+}
+```
 
 ## Installation
 
@@ -26,45 +72,12 @@ app.wsgi_app = ReverseProxiedApp(app.wsgi_app)
 application = ReverseProxiedApp(get_wsgi_application())
 ```
 
-## Usage
-
-Let's say `client.com` is proxying `service.com` at `client.com/service`.
-
-Let's also say we are already handling the host name change using
-`X-Forwarded-For` / `X-Forwarded-Host` (this middleware does not alter host
-name).
-
-Let's also say `service.com/posts` returns paginated posts with `next` URLs in
-the responses:
-
-```
-curl -H 'X-Forwarded-Host: client.com' http://service.com/posts
-{
-    "next": "http://client.com/posts?page=2",
-    ...
-}
-```
-
-That URL will 404, since the posts live at `/service/posts` on the client.
-Assuming `service.com` honors `SCRIPT_NAME`/`SCRIPT_URL` when generating urls,
-you can fix this by adding the proxyprefix middleware to `service.com` and
-making sure `client.com` passes a `X-Forwarded-Prefix` header.
-For example:
-
-```
-curl -H 'X-Forwarded-Host: client.com' -H 'X-Forwarded-Prefix: service` \
-http://service.com/posts
-{
-    "next": "http://client.com/service/posts?page=2",
-    ...
-}
-```
-
-### Sending X-Forwarded-For header in local development:
+### Sending `X-Forwarded-*` headers in local development
 
 If you use [djproxy](https://github.com/thomasw/djproxy) to proxy services in
-local development, you can send the `X-Forwarded-Prefix` by using the
-`XForwardedPrefix` proxy middleware included in this package. For example:
+local development, it will send `X-Forwarded-Host` and `X-Forwarded-Proto` for
+you. But `X-Forwarded-Prefix` is a non-standard header, so you will need to use
+the middleware provided by proxyprefix:
 
 ```python
 from djproxy.urls import generate_routes
@@ -79,9 +92,6 @@ configuration = {
 
 urlpatterns += generate_routes(configuration)
 ```
-
-This will tell djproxy to send `X-Forwarded-Prefix: /service_prefix/` in the
-request to service.com.
 
 **Middleware support was added in djproxy 2.0.0.**
 
