@@ -41,9 +41,9 @@ middleware, and making sure your proxy sends these headers with its request to
 
 ```
 curl \
-  --header X-Forwarded-Host: client.com \
-  --header X-Forwarded-Proto: http \
-  --header X-Forwarded-Prefix: /service/ \
+  --header "X-Forwarded-Host: client.com" \
+  --header "X-Forwarded-Proto: http" \
+  --header "X-Forwarded-Prefix: /service/" \
   https://service.com/posts/
 ```
 
