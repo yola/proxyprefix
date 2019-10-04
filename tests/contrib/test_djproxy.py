@@ -1,6 +1,5 @@
-from unittest2 import TestCase
-
 from mock import Mock
+from unittest import TestCase
 
 from proxyprefix.contrib.djproxy import XForwardedPrefix
 

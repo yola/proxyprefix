@@ -1,3 +1,7 @@
+## DEV
+
+* Python 3 support (in tests, no changes to the library were necessary).
+
 ## 0.1.2
 
 * [Set scheme with `X-Forwarded-Proto` header.](https://github.com/yola/proxyprefix/pull/7)
