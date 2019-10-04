@@ -14,7 +14,8 @@ class TestIntegrationWithFakeApp(TestCase):
         app.wsgi_app = self.orig_wsgi_app
 
     def get_path(self, headers=None):
-        return self.client.get('/show_path', headers=headers).data
+        path = self.client.get('/show_path', headers=headers).data
+        return path.decode('utf-8')
 
     def test_unwrapped_app_does_not_alter_path(self):
         self.assertEqual(self.get_path(), '/show_path')
