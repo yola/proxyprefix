@@ -1,5 +1,5 @@
 from mock import Mock, patch
-from unittest2 import TestCase
+from unittest import TestCase
 
 from proxyprefix.wsgi import prefix_paths, set_scheme, ReverseProxiedApp
 

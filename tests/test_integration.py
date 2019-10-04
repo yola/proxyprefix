@@ -1,4 +1,4 @@
-from unittest2 import TestCase
+from unittest import TestCase
 
 from proxyprefix.wsgi import ReverseProxiedApp
 from tests.fake_app import app
