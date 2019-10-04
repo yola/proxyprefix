@@ -4,4 +4,4 @@ For services behind a reverse proxy so their URLs contain the proxied path.
 
 """
 
-__version__ = '0.1.2'
+__version__ = '0.1.3'

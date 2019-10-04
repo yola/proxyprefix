@@ -1,4 +1,4 @@
-## DEV
+## 0.1.3
 
 * Python 3 support (in tests, no changes to the library were necessary).
 
